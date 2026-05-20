@@ -93,6 +93,9 @@ jobs:
           repository: ${{ env.SOURCE_REPO }}
           ref: ${{ env.SOURCE_BRANCH }}
 
+      - name: Patch prepare script for Docker build (no git in slim image)
+        run: sed -i 's|"prepare": "git config core.hooksPath .githooks"|"prepare": "echo skip"|' package.json
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
