@@ -102,9 +102,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Get commit SHA
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      # - name: Get commit SHA
+      #   id: vars
+      #   run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -113,8 +113,8 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64
-          build-args: |
-            SHA=${{ steps.vars.outputs.sha_short }}
+          # build-args: |
+          #   SHA=${{ steps.vars.outputs.sha_short }}
           tags: |
             ${{ env.IMAGE_NAME }}:${{ inputs.docker_tag }}
             ${{ env.IMAGE_NAME }}:${{ needs.calculate-version.outputs.version }}
